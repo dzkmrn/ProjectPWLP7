@@ -20,4 +20,6 @@ Route::get('/', function () {
 });
 
 Route::resource('mahasiswas', MahasiswaController::class);
+Route::get('/mahasiswas/detailnilai/{NIM}',[MahasiswaController::class,"detailnilai"])->name('detailnilai');
+
 Route::post('find', [MahasiswaController::class, 'find'])->name('find');

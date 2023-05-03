@@ -65,6 +65,17 @@ class MahasiswaController extends Controller
         $Mahasiswa = Mahasiswa::find($NIM);
         return view('mahasiswas.detail', compact('Mahasiswa'));
     }
+    public function detailnilai($NIM)
+    {
+        // menampilkan detail data dengan menemukan/berdasarkan NIM Mahasiswa
+        $Mahasiswa = Mahasiswa::with('matakulias')->where('NIM', $NIM)->first();
+        $nilai = DB::table('mahasiswa_matakuliah')
+            ->join('matakuliah', 'matakuliah.id', '=', 'mahasiswa_matakuliah.matakuliah_id')
+            ->where('mahasiswa_matakuliah.NIM', $NIM)
+            ->select('nilai')
+            ->get();
+        return view('mahasiswas.nilai', ['Mahasiswa' => $Mahasiswa,'nilai' => $nilai]);
+    }
     public function edit($NIM)
     {
         //menampilkan detail data dengan menemukan berdasarkan NIM Mahasiswa untuk
